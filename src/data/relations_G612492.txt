@@ -1,0 +1,11 @@
+friend1,friend2
+Benyart99,Mikela14
+Benyart99,Liborio88
+Benyart99,Rufer13
+Benyart99,Disruptib01
+Mikela14,Liborio88
+Mikela14,Rufer13
+Mikela14,Disruptib01
+Liborio88,Rufer13
+Liborio88,Disruptib01
+Rufer13,Disruptib01
