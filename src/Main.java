@@ -16,17 +16,22 @@ public class Main {
 
     public static JFileChooser fileChooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
 
+    /**
+     * Prints the available options for the main menu on screen.
+     */
     public static void showMenu(){
-
         System.out.println("1. Load people into network");
         System.out.println("2. Load Reationships");
         System.out.println("3. Print out people");
         System.out.println("4. Search");
         System.out.println("5. Log out");
 
-
     }
 
+    /**
+     * Loads a file from the users' filesystem.
+     * @return A File object for the given path, or null if no valid file was found.
+     */
     public static File loadFile(){
         int returnVal = fileChooser.showOpenDialog(null);
         if(returnVal == JFileChooser.APPROVE_OPTION){
@@ -35,6 +40,11 @@ public class Main {
         return null;
     }
 
+    /**
+     * Given a user file, processes all users on it.
+     * @param peopleFile The file containing information from all the users
+     * @return Returns an [object] containing all the users in the given file.
+     */
     public static ArrayList<Person> loadPeople(File peopleFile){
 
         String line;
@@ -61,6 +71,12 @@ public class Main {
         return people;
     }
 
+    /**
+     *
+     * @param personData An array containing all the data for a person, ordered.
+     * @return Returns a Person object with the given data.
+     * @throws ParseException Exception raised if the data received is not correctly formatted.
+     */
     public static Person loadPerson(String [] personData) throws ParseException {
 
         String id,name,lastname,gender,home,groupCode;
@@ -84,6 +100,10 @@ public class Main {
         return new Person(id,name,lastname,birthdate,gender,home,studieDat,workplaces,films,groupCode);
     }
 
+    /**
+     * Prints information of all people in a given array.
+     * @param people An array containing a list of people.
+     */
     public static void showPeople(ArrayList<Person> people){
         if(people.isEmpty()){
             System.out.println("People not loaded");
@@ -96,14 +116,14 @@ public class Main {
 
     public static void main(String[] args) {
 
-        short selectedOpiton;
+        short selectedOption;
         ArrayList<Person> people = null;
         Scanner sc = new Scanner(System.in);
         
         do{
             showMenu();
-            selectedOpiton = sc.nextShort();
-            switch (selectedOpiton){
+            selectedOption = sc.nextShort();
+            switch (selectedOption){
                 case 1:
                     File peopleFile = loadFile();
                     people = loadPeople(peopleFile);
@@ -129,7 +149,7 @@ public class Main {
                     System.out.println("Option not found");
                     break;
             }
-        }while(selectedOpiton != 5);
+        }while(selectedOption != 5);
 
     }
 }
