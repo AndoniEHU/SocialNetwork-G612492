@@ -34,6 +34,10 @@ public class Person {
         this.id = id;
     }
 
+    public Person(String id){
+        this.id = id;
+    }
+
     public String getId() {
         return id;
     }
