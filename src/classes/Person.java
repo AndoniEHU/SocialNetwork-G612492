@@ -4,7 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 
-public class Person {
+public class Person implements Comparable<Person> {
 
     String id;
     String name;
@@ -132,5 +132,10 @@ public class Person {
                 ", films=" + Arrays.toString(films) +
                 ", groupCode='" + groupCode + '\'' +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Person o) {
+        return this.id.compareTo(o.id);
     }
 }
