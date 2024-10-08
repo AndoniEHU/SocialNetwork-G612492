@@ -1,5 +1,6 @@
 import classes.Person;
 import classes.Relationship;
+import classes.SocialNetwork;
 import incl.DoubleOrderedList;
 import incl.OrderedList;
 
@@ -46,41 +47,17 @@ public class Main {
 
     /**
      * Given a user file, processes all users on it.
-     * @param peopleFile The file containing information from all the users
+     * @param filePeople The file containing information from all the users
      * @return Returns an [object] containing all the users in the given file.
      */
-    public static ArrayList<Person> loadPeople(File peopleFile){
 
-        String line;
-        ArrayList<Person> people = new ArrayList<>();
-
-        try{
-            BufferedReader br = new BufferedReader(new FileReader(peopleFile));
-            line = br.readLine();
-
-            while (line != null){
-                String [] personData = line.split(",");
-                Person p = loadPerson(personData);
-                people.add(p);
-                line = br.readLine();
-            }
-            br.close();
-        }catch (IOException e){
-            System.out.println("File not found");
-        } catch (ParseException e) {
-            System.out.println("Date format exception");
-        }
-
-
-        return people;
-    }
-
-    public static DoubleOrderedList<Person> loadPeople2(File filePeople) {
+    public static DoubleOrderedList<Person> loadPeople(File filePeople) {
 
         DoubleOrderedList<Person> people = new DoubleOrderedList<>();
         String line;
         try{
             BufferedReader br = new BufferedReader(new FileReader(filePeople));
+            br.readLine();
             line = br.readLine();
 
             while (line != null){
@@ -108,7 +85,7 @@ public class Main {
     public static Person loadPerson(String [] personData) throws ParseException {
 
         String id,name,lastname,gender,home,groupCode;
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-YYY");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
         Date birthdate;
         String [] studieDat;
         String [] workplaces;
@@ -128,19 +105,6 @@ public class Main {
         return new Person(id,name,lastname,birthdate,gender,home,studieDat,workplaces,films,groupCode);
     }
 
-    /**
-     * Prints information of all people in a given array.
-     * @param people An array containing a list of people.
-     */
-    public static void showPeople(ArrayList<Person> people){
-        if(people.isEmpty()){
-            System.out.println("People not loaded");
-        }else{
-            for(Person p : people){
-                System.out.println(p.toString());
-            }
-        }
-    }
 
     private static OrderedList<Relationship> loadRelations(File relationsFile) {
 
@@ -148,6 +112,7 @@ public class Main {
         String line;
         try{
             BufferedReader br = new BufferedReader(new FileReader(relationsFile));
+            br.readLine();
             line = br.readLine();
 
             while (line != null){
@@ -171,6 +136,7 @@ public class Main {
     public static void main(String[] args) {
 
         short selectedOption;
+        SocialNetwork socialNetwork = new SocialNetwork();
         DoubleOrderedList<Person> people = null;
         OrderedList<Relationship> relations = null;
         Scanner sc = new Scanner(System.in);
@@ -181,19 +147,16 @@ public class Main {
             switch (selectedOption){
                 case 1:
                     File peopleFile = loadFile();
-                    people = loadPeople2(peopleFile);
+                    people = loadPeople(peopleFile);
+                    socialNetwork.setPeople(people);
                     break;
                 case 2:
                     File relationsFile = loadFile();
                     relations = loadRelations(relationsFile);
+                    socialNetwork.setRelations(relations);
                     break;
                 case 3:
                     System.out.println("people");
-                    if(people != null){
-                       // showPeople(people);
-                    }else{
-                        System.out.println("People not loaded");
-                    }
                     break;
                 case 4:
                     System.out.print("introduce ID:");

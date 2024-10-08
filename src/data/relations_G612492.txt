@@ -1,3 +1,4 @@
+friend1,friend2
 Benyart99,Mikela14
 Benyart99,Liborio88
 Benyart99,Rufer13

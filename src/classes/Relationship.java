@@ -39,10 +39,10 @@ public class Relationship implements Comparable<Relationship>{
 
     @Override
     public int compareTo(Relationship o) {
-        if(this.friend1.compareTo(o.friend1) == 0) {
-            return this.friend2.compareTo(o.friend2);
+        if(this.friend1.toLowerCase().compareTo(o.friend1.toLowerCase()) == 0) {
+            return this.friend2.toLowerCase().compareTo(o.friend2.toLowerCase());
         }
-        return this.friend1.compareTo(o.friend1);
+        return this.friend1.toLowerCase().compareTo(o.friend1.toLowerCase());
     }
 
 

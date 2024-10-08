@@ -1,3 +1,4 @@
+idperson,name,lastname,birthdate,gender,birthplace,home,studiedat,workplaces,films,groupcode
 Benyart99,Ben,Yart,13-06-1995,Male,Mendillorri,Irura,Miravalles;Erain,Vitoria-Gasteiz;Madrid;Igantzi,The Good Girl;Quinceanera;The Lion King;Shrek;Titanic,G612492
 Mikela14,Mikela,Berastegui,07-06-2005,Female,Donosti,Andoain,Ondarreta;Leizaran;Euskal Herriko Unibertsitatea,Andoain;Lasarte-Oria;Aduna,A Beautiful Mind;ET;Shrek;Shrek 2,G612492
 Liborio88,Liborio,Bilbao,03-08-2002,Male,Durango,Beasain,La Salle Durango;La Salle Beasain,Donosti,In the Company of Men;Shrek;Run Lola Run;Super Size Me,G612492

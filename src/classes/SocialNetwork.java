@@ -5,6 +5,27 @@ import incl.OrderedList;
 
 public class SocialNetwork {
 
-    DoubleOrderedList<Person> people = new DoubleOrderedList<Person>();
-    OrderedList<Relationship> relations = new OrderedList<Relationship>();
+    DoubleOrderedList<Person> people;
+    OrderedList<Relationship> relations;
+
+    public SocialNetwork() {
+        people = new DoubleOrderedList<>();
+        relations = new OrderedList<>();
+    }
+
+    public DoubleOrderedList<Person> getPeople() {
+        return people;
+    }
+
+    public void setPeople(DoubleOrderedList<Person> people) {
+        this.people = people;
+    }
+
+    public OrderedList<Relationship> getRelations() {
+        return relations;
+    }
+
+    public void setRelations(OrderedList<Relationship> relations) {
+        this.relations = relations;
+    }
 }
