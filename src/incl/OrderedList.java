@@ -45,11 +45,14 @@ public class OrderedList<T> implements ListADT<T>, OrderedListADT<T> {
         }
         else
         {
+            Node<T> previous = traverse;
+            traverse = traverse.getNext();
             while ((temp.compareTo(traverse.getElement()) > 0)) {
+                previous = traverse;
                 traverse = traverse.getNext();
             }
-            newNode.setNext(traverse.getNext());
-            traverse.setNext(newNode);
+            newNode.setNext(traverse);
+            previous.setNext(newNode);
 
         }
         count++;
