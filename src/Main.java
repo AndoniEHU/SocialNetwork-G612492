@@ -1,4 +1,8 @@
 import classes.Person;
+import classes.Relationship;
+import classes.SocialNetwork;
+import incl.DoubleOrderedList;
+import incl.OrderedList;
 
 import javax.swing.*;
 
@@ -8,6 +12,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.Scanner;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
@@ -42,16 +47,17 @@ public class Main {
 
     /**
      * Given a user file, processes all users on it.
-     * @param peopleFile The file containing information from all the users
+     * @param filePeople The file containing information from all the users
      * @return Returns an [object] containing all the users in the given file.
      */
-    public static ArrayList<Person> loadPeople(File peopleFile){
 
+    public static DoubleOrderedList<Person> loadPeople(File filePeople) {
+
+        DoubleOrderedList<Person> people = new DoubleOrderedList<>();
         String line;
-        ArrayList<Person> people = new ArrayList<>();
-
         try{
-            BufferedReader br = new BufferedReader(new FileReader(peopleFile));
+            BufferedReader br = new BufferedReader(new FileReader(filePeople));
+            br.readLine();
             line = br.readLine();
 
             while (line != null){
@@ -67,7 +73,6 @@ public class Main {
             System.out.println("Date format exception");
         }
 
-
         return people;
     }
 
@@ -80,7 +85,7 @@ public class Main {
     public static Person loadPerson(String [] personData) throws ParseException {
 
         String id,name,lastname,gender,home,groupCode;
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-YYY");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
         Date birthdate;
         String [] studieDat;
         String [] workplaces;
@@ -100,24 +105,40 @@ public class Main {
         return new Person(id,name,lastname,birthdate,gender,home,studieDat,workplaces,films,groupCode);
     }
 
-    /**
-     * Prints information of all people in a given array.
-     * @param people An array containing a list of people.
-     */
-    public static void showPeople(ArrayList<Person> people){
-        if(people.isEmpty()){
-            System.out.println("People not loaded");
-        }else{
-            for(Person p : people){
-                System.out.println(p.toString());
+
+    private static OrderedList<Relationship> loadRelations(File relationsFile) {
+
+        OrderedList<Relationship> relations = new OrderedList<>();
+        String line;
+        try{
+            BufferedReader br = new BufferedReader(new FileReader(relationsFile));
+            br.readLine();
+            line = br.readLine();
+
+            while (line != null){
+                String [] relationship = line.split(",");
+                Relationship r = new Relationship(relationship[0],relationship[1]);
+                relations.add(r);
+                line = br.readLine();
             }
+            br.close();
+            Iterator<Relationship> it = relations.iterator();
+            while(it.hasNext()){
+                Relationship r = it.next();
+                System.out.println(r.toString());
+            }
+        }catch (IOException e){
+            System.out.println("File not found");
         }
+        return relations;
     }
 
     public static void main(String[] args) {
 
         short selectedOption;
-        ArrayList<Person> people = null;
+        SocialNetwork socialNetwork = new SocialNetwork();
+        DoubleOrderedList<Person> people = null;
+        OrderedList<Relationship> relations = null;
         Scanner sc = new Scanner(System.in);
         
         do{
@@ -127,20 +148,34 @@ public class Main {
                 case 1:
                     File peopleFile = loadFile();
                     people = loadPeople(peopleFile);
+                    socialNetwork.setPeople(people);
                     break;
                 case 2:
-                    File relationsFile = loadFile();
+                    if(!socialNetwork.getPeople().isEmpty()){
+                        File relationsFile = loadFile();
+                        relations = loadRelations(relationsFile);
+                        socialNetwork.setRelations(relations);
+                    }else{
+                        System.out.println("No people loaded");
+                    }
                     break;
                 case 3:
-                    System.out.println("people");
-                    if(people != null){
-                        showPeople(people);
+                    System.out.println("people:");
+                    if(!socialNetwork.getPeople().isEmpty()){
+                        socialNetwork.showPeople();
                     }else{
-                        System.out.println("People not loaded");
+                        System.out.println("No people loaded");
                     }
                     break;
                 case 4:
-                    System.out.print("introduce ID:");
+                    System.out.print("introduce ID: ");
+                    String id = sc.next();
+                    System.out.println("Friends of "+id+": ");
+                    if(!socialNetwork.getPeople().isEmpty()){
+                        socialNetwork.showRelations(id);
+                    }else{
+                        System.out.println("No people loaded");
+                    }
                     break;
                 case 5:
                     System.out.println("Login out...");
