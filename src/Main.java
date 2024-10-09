@@ -151,15 +151,31 @@ public class Main {
                     socialNetwork.setPeople(people);
                     break;
                 case 2:
-                    File relationsFile = loadFile();
-                    relations = loadRelations(relationsFile);
-                    socialNetwork.setRelations(relations);
+                    if(!socialNetwork.getPeople().isEmpty()){
+                        File relationsFile = loadFile();
+                        relations = loadRelations(relationsFile);
+                        socialNetwork.setRelations(relations);
+                    }else{
+                        System.out.println("No people loaded");
+                    }
                     break;
                 case 3:
-                    System.out.println("people");
+                    System.out.println("people:");
+                    if(!socialNetwork.getPeople().isEmpty()){
+                        socialNetwork.showPeople();
+                    }else{
+                        System.out.println("No people loaded");
+                    }
                     break;
                 case 4:
-                    System.out.print("introduce ID:");
+                    System.out.print("introduce ID: ");
+                    String id = sc.next();
+                    System.out.println("Friends of "+id+": ");
+                    if(!socialNetwork.getPeople().isEmpty()){
+                        socialNetwork.showRelations(id);
+                    }else{
+                        System.out.println("No people loaded");
+                    }
                     break;
                 case 5:
                     System.out.println("Login out...");
