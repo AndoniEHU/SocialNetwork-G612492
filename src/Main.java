@@ -51,9 +51,8 @@ public class Main {
      * @return Returns an [object] containing all the users in the given file.
      */
 
-    public static DoubleOrderedList<Person> loadPeople(File filePeople) {
+    public static DoubleOrderedList<Person> loadPeople(File filePeople,DoubleOrderedList<Person> people) {
 
-        DoubleOrderedList<Person> people = new DoubleOrderedList<>();
         String line;
         try{
             BufferedReader br = new BufferedReader(new FileReader(filePeople));
@@ -106,9 +105,8 @@ public class Main {
     }
 
 
-    private static OrderedList<Relationship> loadRelations(File relationsFile) {
+    private static OrderedList<Relationship> loadRelations(File relationsFile, OrderedList<Relationship> relations) {
 
-        OrderedList<Relationship> relations = new OrderedList<>();
         String line;
         try{
             BufferedReader br = new BufferedReader(new FileReader(relationsFile));
@@ -147,14 +145,13 @@ public class Main {
             switch (selectedOption){
                 case 1:
                     File peopleFile = loadFile();
-                    people = loadPeople(peopleFile);
+                    people = loadPeople(peopleFile,socialNetwork.getPeople());
                     socialNetwork.setPeople(people);
                     break;
                 case 2:
                     if(!socialNetwork.getPeople().isEmpty()){
                         File relationsFile = loadFile();
-                        relations = loadRelations(relationsFile);
-                        socialNetwork.setRelations(relations);
+                        socialNetwork.setRelations(loadRelations(relationsFile,socialNetwork.getRelations()));
                     }else{
                         System.out.println("No people loaded");
                     }
