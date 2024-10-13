@@ -178,7 +178,7 @@ public class Main {
                     }
                     break;
                 case 5:
-                    System.out.println("Login out...");
+                    System.out.println("Log out...");
                     break;
                 default:
                     System.out.println("Option not found");
