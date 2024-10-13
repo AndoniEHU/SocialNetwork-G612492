@@ -42,7 +42,8 @@ public class SocialNetwork {
             if(r.getFriend1().equals(id)){
                 System.out.print(r.getFriend2()+", ");
             }
-            if(r.getFriend2().equals(id)){
+
+            else if(r.getFriend2().equals(id)){
                 System.out.print(r.getFriend1()+", ");
             }
         }
