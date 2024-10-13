@@ -1,5 +1,0 @@
-Benyart99,Ben,Yart,13-06-1995,Male,Mendillorri,Irura,Miravalles;Erain,Vitoria-Gasteiz;Madrid;Igantzi,The Good Girl;Quinceanera;The Lion King;Shrek;Titanic,G612492
-Mikela14,Mikela,Berastegui,07-06-2005,Female,Donosti,Andoain,Ondarreta;Leizaran;Euskal Herriko Unibertsitatea,Andoain;Lasarte-Oria;Aduna,A Beautiful Mind;ET;Shrek;Shrek 2,G612492
-Liborio88,Liborio,Bilbao,03-08-2002,Male,Durango,Beasain,La Salle Durango;La Salle Beasain,Donosti,In the Company of Men;Shrek;Run Lola Run;Super Size Me,G612492
-Rufer13,Neo,Ruffini,13-03-2003,Male,Rome,Orio,Asuncion ikastetxea,Donosti;Orio,Home Alone;Independence Day;Thirteen;Shrek;Batman;Shakespeare in Love,G612492
-Disruptib01,Disa,Church,25-12-2001,Female,Wisconsin,Renteria,Telleri Alde;Harvard University,Washington DC;Bogota;Oiartzun,Harry Potter 5: Order of the Phoenix;Shrek;Ghost Busters;American Beauty,G612492
