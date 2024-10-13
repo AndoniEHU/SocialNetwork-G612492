@@ -135,8 +135,6 @@ public class Main {
 
         short selectedOption;
         SocialNetwork socialNetwork = new SocialNetwork();
-        DoubleOrderedList<Person> people = null;
-        OrderedList<Relationship> relations = null;
         Scanner sc = new Scanner(System.in);
         
         do{
@@ -145,8 +143,7 @@ public class Main {
             switch (selectedOption){
                 case 1:
                     File peopleFile = loadFile();
-                    people = loadPeople(peopleFile,socialNetwork.getPeople());
-                    socialNetwork.setPeople(people);
+                    socialNetwork.setPeople(loadPeople(peopleFile,socialNetwork.getPeople()));
                     break;
                 case 2:
                     if(!socialNetwork.getPeople().isEmpty()){
