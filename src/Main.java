@@ -1,4 +1,3 @@
-package main;
 import classes.Person;
 import classes.Relationship;
 import classes.SocialNetwork;
