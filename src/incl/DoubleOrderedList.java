@@ -9,6 +9,7 @@
 package incl;
 
 
+import classes.Person;
 import incl.exceptions.NonComparableElementException;
 
 public class DoubleOrderedList<T> extends DoubleList<T>
@@ -75,4 +76,6 @@ public class DoubleOrderedList<T> extends DoubleList<T>
       
       count++;
    }
+
+
 }

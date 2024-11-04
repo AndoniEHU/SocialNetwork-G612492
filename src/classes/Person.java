@@ -11,6 +11,7 @@ public class Person implements Comparable<Person> {
     String lastname;
     Date birthdate;
     String gender;
+    String birthplace;
     String home;
     String [] studiedat;
     String [] workplaces;
@@ -21,7 +22,7 @@ public class Person implements Comparable<Person> {
 
     }
 
-    public Person(String id, String name, String lastname,Date birthdate,String gender,String home,String[] studiedat,String[] workplaces,String[] films,String groupCode) {
+    public Person(String id, String name, String lastname,Date birthdate,String gender,String birthplace,String home,String[] studiedat,String[] workplaces,String[] films,String groupCode) {
         this.films = films;
         this.groupCode = groupCode;
         this.workplaces = workplaces;
@@ -29,6 +30,7 @@ public class Person implements Comparable<Person> {
         this.home = home;
         this.birthdate = birthdate;
         this.gender = gender;
+        this.birthplace = birthplace;
         this.lastname = lastname;
         this.name = name;
         this.id = id;
@@ -117,25 +119,67 @@ public class Person implements Comparable<Person> {
     public void setGender(String gender) {
         this.gender = gender;
     }
-
-    @Override
-    public String toString() {
-        return "Person{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", lastname='" + lastname + '\'' +
-                ", birthdate=" + new SimpleDateFormat("dd-MM-yyyy").format(birthdate) +
-                ", gender='" + gender + '\'' +
-                ", home='" + home + '\'' +
-                ", studiedat=" + Arrays.toString(studiedat) +
-                ", workplaces=" + Arrays.toString(workplaces) +
-                ", films=" + Arrays.toString(films) +
-                ", groupCode='" + groupCode + '\'' +
-                '}';
+    
+    public String getBirthplace() {
+        return birthplace;
+    }
+    
+    public void setBirthplace(String birthplace) {
+        this.birthplace = birthplace;
     }
 
     @Override
+    public String toString() {
+    	String resul;
+    	try {
+    		resul="Person{" +
+                    "id='" + id + '\'' +
+                    ", name='" + name + '\'' +
+                    ", lastname='" + lastname + '\'' +
+                    ", birthdate=" + new SimpleDateFormat("dd-MM-yyyy").format(birthdate) +
+                    ", gender='" + gender + '\'' +
+                    ", birthplace='" + birthplace + '\'' +
+                    ", home='" + home + '\'' +
+                    ", studiedat=" + Arrays.toString(studiedat) +
+                    ", workplaces=" + Arrays.toString(workplaces) +
+                    ", films=" + Arrays.toString(films) +
+                    ", groupCode='" + groupCode + '\'' +
+                    '}';
+    	}catch(NullPointerException e) {
+    		resul="Person{" +
+                    "id='" + id + '\'' +
+                    ", name='" + name + '\'' +
+                    ", lastname='" + lastname + '\'' +
+                    ", birthdate= 'null'" +
+                    ", gender='" + gender + '\'' +
+                    ", birthplace='" + birthplace + '\'' +
+                    ", home='" + home + '\'' +
+                    ", studiedat=" + Arrays.toString(studiedat) +
+                    ", workplaces=" + Arrays.toString(workplaces) +
+                    ", films=" + Arrays.toString(films) +
+                    ", groupCode='" + groupCode + '\'' +
+                    '}';
+    	}
+        return resul;
+    }
+
+    public String toStringIDandSurname() {
+    	return "id= " + id + ", lastname= " + lastname;
+    }
+    public String toStringNameSurnameBirthplaceStudiedat() {
+    	return "name= " + name + ", lastname= " + lastname + ", birthplace= " + birthplace + ", studiedat= " + Arrays.toString(studiedat);
+    }
+    @Override
     public int compareTo(Person o) {
-        return this.id.compareTo(o.id);
+        return this.id.toLowerCase().compareTo(o.id.toLowerCase());
+    }
+    
+    public boolean equals(Person o) {
+    	if (this.id.toLowerCase().equals(o.id.toLowerCase())) {
+    		return true;
+    	}
+    	else {
+    		return false;
+    	}
     }
 }

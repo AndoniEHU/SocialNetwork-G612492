@@ -61,8 +61,7 @@ public class OrderedList<T> implements ListADT<T>, OrderedListADT<T> {
     public T removeFirst() {
         if (isEmpty())
             throw new EmptyCollectionException("list is empty");
-        //Node<T> temp = head;
-        if(head==last) {
+        if(count==1) {
             head = null;
             last = head;
         }
@@ -77,12 +76,11 @@ public class OrderedList<T> implements ListADT<T>, OrderedListADT<T> {
         if (isEmpty())
             throw new EmptyCollectionException("list is empty");
         Node<T>traverse=head;
-        if(head==last) {
-            head = null;
-            last = head;
+        if(count==1) {
+        	last = head;
         }
         else {
-            while(last!=traverse.getNext()) {
+        	while(!traverse.getNext().getElement().equals(last.getElement())) {
                 traverse = traverse.getNext();
             }
             traverse.setNext(null);
@@ -93,30 +91,23 @@ public class OrderedList<T> implements ListADT<T>, OrderedListADT<T> {
     }
     @Override
     public T remove(T element) {
-        Comparable temp;
-        if (element instanceof Comparable) {
-            temp = (Comparable)element;
-        }
-        else {
-            throw new NonComparableElementException("ordered list");
-        }
 
         if (isEmpty()) {
             throw new EmptyCollectionException("list is empty");
         }
 
         if (contains(element)) {
-            if(head.getElement()==element) {
+            if(head.getElement().equals(element)) {
                 return removeFirst();
+            }
+            
+            if(head.getElement().equals(element)) {
+            	return removeLast();
             }
             else {
                 Node<T>traverse=head;
-                while(traverse.getNext().getElement()!=element) {
+                while(!traverse.getNext().getElement().equals(element)) {
                     traverse = traverse.getNext();
-                }
-
-                if (traverse.getNext()==last) {
-                    last=traverse;
                 }
 
                 traverse.setNext(traverse.getNext().getNext());
@@ -138,15 +129,15 @@ public class OrderedList<T> implements ListADT<T>, OrderedListADT<T> {
     }
     @Override
     public boolean contains(T target) {
-        if (head==null) {
+        if (isEmpty()) {
             return false;
         }
         Node<T>traverse=head;
-        while(traverse.getElement()!=target) {
-            traverse = traverse.getNext();
-            if (traverse==null) {
+        while(!traverse.getElement().equals(target)) {
+            if (traverse.getNext()==null) {
                 return false;
             }
+            traverse = traverse.getNext();
         }
         return true;
     }
@@ -168,7 +159,7 @@ public class OrderedList<T> implements ListADT<T>, OrderedListADT<T> {
         return new SingleIterator<>(head,count);
     }
 
-    public void showOrderedList() { //para pruebas
+    public void showOrderedList() { 
     	Node<T> traverse = head;
     	for (int i=0; i<size(); i++) {
     		System.out.print(" -> " + traverse.getElement());
