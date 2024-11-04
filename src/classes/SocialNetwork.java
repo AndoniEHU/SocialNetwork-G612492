@@ -68,6 +68,25 @@ public class SocialNetwork {
         return result;
     }
 
+    public ArrayList<String> getRelationshipsWithSurname(String id){
+        Iterator<Relationship> it = relations.iterator();
+        ArrayList<String> result = new ArrayList<>();
+        while(it.hasNext()){
+            Relationship r = it.next();
+            Person aux;
+            if(r.getFriend1().equals(id)){
+                aux = findPerson(r.getFriend2());
+                result.add(aux.getId() + " " + aux.getLastname());
+            }
+
+            else if(r.getFriend2().equals(id)){
+                aux = findPerson(r.getFriend1());
+                result.add(aux.getId() + " " + aux.getLastname());
+            }
+        }
+        return result;
+    }
+
     public ArrayList<Person> findFromSurname(String surname){
         ArrayList<Person> persons = new ArrayList<>();
         Iterator<Person> it = people.iterator();

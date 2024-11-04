@@ -129,7 +129,6 @@ public class Main {
             Iterator<Relationship> it = relations.iterator();
             while(it.hasNext()){
                 Relationship r = it.next();
-                System.out.println(r.toString());
             }
         }catch (IOException e){
             System.out.println("File not found");
@@ -240,7 +239,7 @@ public class Main {
                     ArrayList<Person> sameSurname = socialNetwork.findFromSurname(surname);
                     for(Person p : sameSurname){
                         System.out.print("relations for "+ p.getId() + "(" +p.getLastname()+"): ");
-                        System.out.println(socialNetwork.getRelationships(p.getId()).toString());
+                        System.out.println(socialNetwork.getRelationshipsWithSurname(p.getId()).toString());
                     }
                     break;
                 case 6:
