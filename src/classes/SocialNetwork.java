@@ -52,6 +52,53 @@ public class SocialNetwork {
 
     }
 
+    public ArrayList<String> getRelationships(String id){
+        Iterator<Relationship> it = relations.iterator();
+        ArrayList<String> result = new ArrayList<>();
+        while(it.hasNext()){
+            Relationship r = it.next();
+            if(r.getFriend1().equals(id)){
+                result.add(r.getFriend2());
+            }
+
+            else if(r.getFriend2().equals(id)){
+                result.add(r.getFriend1());
+            }
+        }
+        return result;
+    }
+
+    public ArrayList<String> getRelationshipsWithSurname(String id){
+        Iterator<Relationship> it = relations.iterator();
+        ArrayList<String> result = new ArrayList<>();
+        while(it.hasNext()){
+            Relationship r = it.next();
+            Person aux;
+            if(r.getFriend1().equals(id)){
+                aux = findPerson(r.getFriend2());
+                result.add(aux.getId() + " " + aux.getLastname());
+            }
+
+            else if(r.getFriend2().equals(id)){
+                aux = findPerson(r.getFriend1());
+                result.add(aux.getId() + " " + aux.getLastname());
+            }
+        }
+        return result;
+    }
+
+    public ArrayList<Person> findFromSurname(String surname){
+        ArrayList<Person> persons = new ArrayList<>();
+        Iterator<Person> it = people.iterator();
+        while(it.hasNext()){
+            Person p = it.next();
+            if(p.getLastname().equalsIgnoreCase(surname)){
+                persons.add(p);
+            }
+        }
+        return persons;
+    }
+
 
     public ArrayList<Person> getPeopleFromBirthplace (String city){
         Iterator<Person> itPerson = this.people.iterator();
