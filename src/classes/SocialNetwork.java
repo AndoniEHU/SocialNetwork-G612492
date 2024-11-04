@@ -4,7 +4,9 @@ import incl.DoubleOrderedList;
 import incl.OrderedList;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 
 public class SocialNetwork {
 
@@ -123,6 +125,40 @@ public class SocialNetwork {
             }
         }
         return null;
+    }
+
+    public ArrayList<String[]> createProfiles(){
+        ArrayList<String[]> profiles = new ArrayList<>();
+        Iterator<Person> itPerson = this.people.iterator();
+        while(itPerson.hasNext()) {
+            Person person = itPerson.next();
+            boolean exist = false;
+            for(int i=0;i<profiles.size() && !exist;i++){
+                String [] p = profiles.get(i);
+                Arrays.sort(p);
+                Arrays.sort(person.getFilms());
+                if(Arrays.equals(p,person.getFilms())){
+                    exist = true;
+                }
+            }
+            if(!exist) {
+                String[] filmsLiked = person.getFilms();
+                profiles.add(filmsLiked);
+            }
+        }
+        return profiles;
+    }
+
+    public ArrayList<Person> splitProfiles(String[] profile){
+        ArrayList<Person> sameProfile = new ArrayList<>();
+        Iterator<Person> itPerson = this.people.iterator();
+        while(itPerson.hasNext()) {
+            Person person = itPerson.next();
+            if(Arrays.equals(person.getFilms(), profile)){
+                sameProfile.add(person);
+            }
+        }
+        return sameProfile;
     }
 
 }

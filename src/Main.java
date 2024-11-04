@@ -265,7 +265,17 @@ public class Main {
                     }
                     break;
                 case 9:
-                	
+                	ArrayList<String[]> profiles = socialNetwork.createProfiles();
+                    for (String[] profile : profiles){
+                        System.out.println("People with profile:  " + Arrays.toString(profile));
+                        ArrayList<Person> sameProfile = socialNetwork.splitProfiles(profile);
+                        for(Person person : sameProfile){
+                            System.out.println(person.toString());
+                        }
+                        System.out.println();
+                    }
+
+                    break;
                 case 10:
                     System.out.println("Log out...");
                     break;
