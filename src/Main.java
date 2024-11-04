@@ -235,7 +235,14 @@ public class Main {
                     break;
                     
                 case 5:
-                	
+                    System.out.print("introduce surname: ");
+                    String surname = sc.next();
+                    ArrayList<Person> sameSurname = socialNetwork.findFromSurname(surname);
+                    for(Person p : sameSurname){
+                        System.out.print("relations for "+ p.getId() + "(" +p.getLastname()+"): ");
+                        System.out.println(socialNetwork.getRelationships(p.getId()).toString());
+                    }
+                    break;
                 case 6:
                 	System.out.print("introduce city: ");
                     String city = sc.next();
