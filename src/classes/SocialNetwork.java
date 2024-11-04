@@ -3,6 +3,7 @@ package classes;
 import incl.DoubleOrderedList;
 import incl.OrderedList;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 public class SocialNetwork {
@@ -50,4 +51,31 @@ public class SocialNetwork {
         System.out.println();
 
     }
+
+
+    public ArrayList<Person> getPeopleFromBirthplace (String city){
+        Iterator<Person> itPerson = this.people.iterator();
+        ArrayList<Person> result = new ArrayList<>();
+        Person actual;
+        while(itPerson.hasNext()) {
+            actual=itPerson.next();
+            if(actual.getBirthplace().equals(city)) {
+                result.add(actual);
+            }
+        }
+        return result;
+    }
+
+
+    public Person findPerson(String id){
+        Iterator<Person> itPerson = this.people.iterator();
+        while(itPerson.hasNext()) {
+            Person person = itPerson.next();
+            if(person.getId().equals(id)) {
+                return person;
+            }
+        }
+        return null;
+    }
+
 }

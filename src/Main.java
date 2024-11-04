@@ -11,9 +11,7 @@ import javax.swing.filechooser.FileSystemView;
 import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.Scanner;
+import java.util.*;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
@@ -151,62 +149,42 @@ public class Main {
         }
         return result;
     }
-    
-    private static DoubleOrderedList<Person> loadPeopleResidential (DoubleOrderedList<Person> people, File filePeople){
-    	DoubleOrderedList<Person> peopleResidential = new DoubleOrderedList<>();
+
+
+    private static ArrayList<String> loadPeopleResidential (SocialNetwork sn, File filePeople){
+        ArrayList<String> birthplaces = new ArrayList<>();
         String line;
-        Iterator<Person> itPeople;
-        Person actual;
         try{
             BufferedReader br = new BufferedReader(new FileReader(filePeople));
             br.readLine();
             line = br.readLine();
             while (line != null){
-                Person newPerson = new Person(line);
-                itPeople = people.iterator();
-               	do {
-               		if (!itPeople.hasNext()) {
-               			throw new ElementNotFoundException("residential.txt");
-               		}
-               		actual = itPeople.next();
-               	}while(!actual.equals(newPerson));
-               	peopleResidential.add(actual);
+                Person person = sn.findPerson(line);
+                if(person != null && !birthplaces.contains(person.getBirthplace())) {
+                    birthplaces.add(person.getBirthplace());
+                }
                 line = br.readLine();
             }
             br.close();
         }catch (IOException e){
             System.out.println("File not found");
         }
-        return peopleResidential;
+        return birthplaces;
     }
     
-    private static void getPeopleSameBirthplace(DoubleOrderedList<Person> peopleResidential, DoubleOrderedList<Person> people) {
-    	Iterator<Person> itPerson = peopleResidential.iterator();
-    	Iterator<Person> itPerson2;
-        int numberOfPerson1 = 1;
-        int numberOfPerson2 = 1;
-        Person actual;
-        Person actual2;
-        while(itPerson.hasNext()) {
-        	actual = itPerson.next();
-        	if (!(actual.getBirthplace()==null)) {
-        		DoubleOrderedList<Person> peopleResidentialSameCity = getPeopleFromBirthplace(people, actual.getBirthplace());
-        		itPerson2 = peopleResidentialSameCity.iterator();
-        		System.out.println("Same birthplace as person " + numberOfPerson1 + ", id " + actual.getId() + ":");
-        		while(itPerson2.hasNext()) {
-        			actual2 = itPerson2.next();
-        			if(!actual.equals(actual2)){
-        				System.out.println(numberOfPerson2 + ". " + actual2.toStringNameSurnameBirthplaceStudiedat());
-        				numberOfPerson2 = numberOfPerson2 + 1;
-        			}
-        		}
-        		numberOfPerson2 = 1;
-        	}
-        	else {
-        		System.out.println("Person " + numberOfPerson1 + ", id " + actual.getId() + ": Has an unknown birthplace");
-        	}
-        	numberOfPerson1 = numberOfPerson1 + 1;
+    private static ArrayList<Person> getPeopleSameBirthplace(SocialNetwork sn,ArrayList<String> birthplaces) {
+    	ArrayList<Person> result = new ArrayList<>();
+        for(String birthplace : birthplaces) {
+            ArrayList<Person> aux = sn.getPeopleFromBirthplace(birthplace);
+            for(Person person : aux) {
+                if(!result.contains(person)) {
+                    result.add(person);
+                }else{
+                    System.out.println("hola");
+                }
+            }
         }
+        return result;
     }
 
     public static void main(String[] args) {
@@ -274,8 +252,11 @@ public class Main {
                 	
                 case 8:
                 	File residentialFile = loadFile();
-                    DoubleOrderedList<Person> peopleResidential = loadPeopleResidential(people, residentialFile);
-                    getPeopleSameBirthplace(peopleResidential, people);
+                    ArrayList<String> birthplaces = loadPeopleResidential(socialNetwork, residentialFile);
+                    ArrayList<Person> sameBirthplaces = getPeopleSameBirthplace(socialNetwork, birthplaces);
+                    for(Person person : sameBirthplaces){
+                        System.out.println(person.toStringNameSurnameBirthplaceStudiedat());
+                    }
                     break;
                 case 9:
                 	
