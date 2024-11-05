@@ -3,10 +3,7 @@ package classes;
 import incl.DoubleOrderedList;
 import incl.OrderedList;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class SocialNetwork {
 
@@ -159,6 +156,25 @@ public class SocialNetwork {
             }
         }
         return sameProfile;
+    }
+
+    public ArrayList<Person> findBetweenYears(int year1,int year2){
+        ArrayList<Person> persons = new ArrayList<>();
+        Iterator<Person> itPerson = this.people.iterator();
+        while(itPerson.hasNext()) {
+            Person person = itPerson.next();
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(person.getBirthdate());
+            int yearBirth = calendar.get(Calendar.YEAR);
+
+            if(year1<=yearBirth && year2>=yearBirth){
+                persons.add(person);
+            }
+        }
+
+        persons.sort(Comparator.comparing(Person::getBirthplace).thenComparing(Person::getLastname).thenComparing(Person::getName));
+
+        return persons;
     }
 
 }

@@ -54,9 +54,8 @@ public class Main {
      * @return Returns an [object] containing all the users in the given file.
      */
 
-    public static DoubleOrderedList<Person> loadPeople(File filePeople) {
+    public static DoubleOrderedList<Person> loadPeople(File filePeople,DoubleOrderedList<Person> people) {
 
-        DoubleOrderedList<Person> people = new DoubleOrderedList<>();
         String line;
         try{
             BufferedReader br = new BufferedReader(new FileReader(filePeople));
@@ -110,9 +109,8 @@ public class Main {
     }
 
 
-    private static OrderedList<Relationship> loadRelations(File relationsFile) {
+    private static OrderedList<Relationship> loadRelations(File relationsFile, OrderedList<Relationship> relations) {
 
-        OrderedList<Relationship> relations = new OrderedList<>();
         String line;
         try{
             BufferedReader br = new BufferedReader(new FileReader(relationsFile));
@@ -126,10 +124,6 @@ public class Main {
                 line = br.readLine();
             }
             br.close();
-            Iterator<Relationship> it = relations.iterator();
-            while(it.hasNext()){
-                Relationship r = it.next();
-            }
         }catch (IOException e){
             System.out.println("File not found");
         }
@@ -202,14 +196,12 @@ public class Main {
             switch (selectedOption){
                 case 1:
                     File peopleFile = loadFile();
-                    people = loadPeople(peopleFile);
-                    socialNetwork.setPeople(people);
+                    socialNetwork.setPeople(loadPeople(peopleFile,socialNetwork.getPeople()));
                     break;
                 case 2:
                     if(!socialNetwork.getPeople().isEmpty()){
                         File relationsFile = loadFile();
-                        relations = loadRelations(relationsFile);
-                        socialNetwork.setRelations(relations);
+                        socialNetwork.setRelations(loadRelations(relationsFile,socialNetwork.getRelations()));
                     }else{
                         System.out.println("No people loaded");
                     }
@@ -239,7 +231,12 @@ public class Main {
                     ArrayList<Person> sameSurname = socialNetwork.findFromSurname(surname);
                     for(Person p : sameSurname){
                         System.out.print("relations for "+ p.getId() + "(" +p.getLastname()+"): ");
-                        System.out.println(socialNetwork.getRelationshipsWithSurname(p.getId()).toString());
+                        ArrayList<String> relationsWithSur = socialNetwork.getRelationshipsWithSurname(p.getId());
+                        if(!relationsWithSur.isEmpty()){
+                            System.out.println(relationsWithSur);
+                        }else{
+                            System.out.println("No relations");
+                        }
                     }
                     break;
                 case 6:
@@ -255,7 +252,17 @@ public class Main {
                     }
                     break;
                 case 7:
-                	
+                    int year1;
+                    int year2;
+                    System.out.println("Introduce a year:");
+                    year1 = sc.nextInt();
+                    System.out.println("Introduce another year:");
+                    year2 = sc.nextInt();
+                    ArrayList<Person> findedBetweenYears = socialNetwork.findBetweenYears(year1,year2);
+                    for(Person p : findedBetweenYears){
+                        System.out.println(p.toStringBirthplaceSurnameName());
+                    }
+                    break;
                 case 8:
                 	File residentialFile = loadFile();
                     ArrayList<String> birthplaces = loadPeopleResidential(socialNetwork, residentialFile);

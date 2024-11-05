@@ -169,6 +169,9 @@ public class Person implements Comparable<Person> {
     public String toStringNameSurnameBirthplaceStudiedat() {
     	return "name= " + name + ", lastname= " + lastname + ", birthplace= " + birthplace + ", studiedat= " + Arrays.toString(studiedat);
     }
+    public String toStringBirthplaceSurnameName() {
+        return "birthplace= " + birthplace + ", lastname= " + lastname + ", name= " + name;
+    }
     @Override
     public int compareTo(Person o) {
         return this.id.toLowerCase().compareTo(o.id.toLowerCase());
