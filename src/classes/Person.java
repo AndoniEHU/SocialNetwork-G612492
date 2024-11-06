@@ -176,9 +176,11 @@ public class Person implements Comparable<Person> {
     public int compareTo(Person o) {
         return this.id.toLowerCase().compareTo(o.id.toLowerCase());
     }
-    
-    public boolean equals(Person o) {
-    	if (this.id.toLowerCase().equals(o.id.toLowerCase())) {
+
+    @Override
+    public boolean equals(Object o) {
+        Person p = (Person) o;
+    	if (this.id.equalsIgnoreCase(p.id)) {
     		return true;
     	}
     	else {

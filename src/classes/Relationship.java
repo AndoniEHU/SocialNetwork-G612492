@@ -45,5 +45,14 @@ public class Relationship implements Comparable<Relationship>{
         return this.friend1.toLowerCase().compareTo(o.friend1.toLowerCase());
     }
 
+    @Override
+    public boolean equals(Object o) {
+        Relationship r = (Relationship) o;
+        if(this.friend1.equalsIgnoreCase(r.friend1) && this.friend2.equalsIgnoreCase(r.friend2)) {
+            return true;
+        }
+        return this.friend1.equalsIgnoreCase(r.friend2) && this.friend2.equalsIgnoreCase(r.friend1);
+    }
+
 
 }

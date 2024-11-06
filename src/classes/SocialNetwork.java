@@ -35,6 +35,16 @@ public class SocialNetwork {
         System.out.println(this.people.toString());
     }
 
+    public boolean contains(Person p){
+        Iterator<Person> it = people.iterator();
+        while(it.hasNext()){
+            if(it.next().getId().equals(p.getId())){
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void showRelations(String id){
         Iterator<Relationship> it = relations.iterator();
         while(it.hasNext()){
@@ -48,7 +58,6 @@ public class SocialNetwork {
             }
         }
         System.out.println();
-
     }
 
     public ArrayList<String> getRelationships(String id){
@@ -105,7 +114,7 @@ public class SocialNetwork {
         Person actual;
         while(itPerson.hasNext()) {
             actual=itPerson.next();
-            if(actual.getBirthplace().equals(city)) {
+            if(actual.getBirthplace().equalsIgnoreCase(city)) {
                 result.add(actual);
             }
         }

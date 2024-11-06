@@ -65,7 +65,9 @@ public class Main {
             while (line != null){
                 String [] personData = line.split(",");
                 Person p = loadPerson(personData);
-                people.add(p);
+                if(!people.contains(p)){
+                    people.add(p);
+                }
                 line = br.readLine();
             }
             br.close();
@@ -120,7 +122,9 @@ public class Main {
             while (line != null){
                 String [] relationship = line.split(",");
                 Relationship r = new Relationship(relationship[0],relationship[1]);
-                relations.add(r);
+                if(!relations.contains(r)){
+                    relations.add(r);
+                }
                 line = br.readLine();
             }
             br.close();
@@ -129,20 +133,6 @@ public class Main {
         }
         return relations;
     }
-    
-    private static DoubleOrderedList<Person> getPeopleFromBirthplace (DoubleOrderedList<Person> people, String city){
-    	Iterator<Person> itPerson = people.iterator();
-    	DoubleOrderedList<Person> result = new DoubleOrderedList<>();
-        Person actual;
-        while(itPerson.hasNext()) {
-        	actual=itPerson.next();
-        	if(actual.getBirthplace().equals(city)) {
-        		result.add(actual);
-        	}
-        }
-        return result;
-    }
-
 
     private static ArrayList<String> loadPeopleResidential (SocialNetwork sn, File filePeople){
         ArrayList<String> birthplaces = new ArrayList<>();
@@ -242,13 +232,9 @@ public class Main {
                 case 6:
                 	System.out.print("introduce city: ");
                     String city = sc.next();
-                    DoubleOrderedList<Person> peopleSameCity = getPeopleFromBirthplace(people, city);
-                    itPerson = peopleSameCity.iterator();
-                    int numberOfPerson=1;
-                    while(itPerson.hasNext()) {
-                    	actual = itPerson.next();
-                    	System.out.println("Person " + numberOfPerson + ": " + actual.toStringIDandSurname());
-                    	numberOfPerson=numberOfPerson+1;
+                    ArrayList<Person> peopleSameCity = socialNetwork.getPeopleFromBirthplace(city);
+                    for(Person p : peopleSameCity){
+                        System.out.println(p.getId() + " " +p.getLastname());
                     }
                     break;
                 case 7:
