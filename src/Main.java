@@ -243,7 +243,8 @@ public class Main {
                     year1 = sc.nextInt();
                     System.out.println("Introduce another year:");
                     year2 = sc.nextInt();
-                    ArrayList<Person> findedBetweenYears = socialNetwork.findBetweenYears(year1,year2);
+                    //ArrayList<Person> findedBetweenYears = socialNetwork.findBetweenYears(year1,year2);
+                    ArrayList<Person> findedBetweenYears = socialNetwork.BSTfindBetweenYears(year1,year2);
                     for(Person p : findedBetweenYears){
                         System.out.println(p.toStringBirthplaceSurnameName());
                     }
