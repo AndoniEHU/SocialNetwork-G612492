@@ -139,7 +139,6 @@ public class Main {
         String line;
         try{
             BufferedReader br = new BufferedReader(new FileReader(filePeople));
-            br.readLine();
             line = br.readLine();
             while (line != null){
                 Person person = sn.findPerson(line);
