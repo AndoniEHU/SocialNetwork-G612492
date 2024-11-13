@@ -1,6 +1,7 @@
 package classes;
 
 import incl.DoubleOrderedList;
+import incl.LinkedBinarySearchTree;
 import incl.OrderedList;
 
 import java.util.*;
@@ -184,6 +185,28 @@ public class SocialNetwork {
         persons.sort(Comparator.comparing(Person::getBirthplace).thenComparing(Person::getLastname).thenComparing(Person::getName));
 
         return persons;
+    }
+
+    public ArrayList<Person> BSTfindBetweenYears(int year1,int year2){
+        LinkedBinarySearchTree<Person> tree = new LinkedBinarySearchTree<>(PersonComparator.byBirthplaceLastnameName());
+        ArrayList<Person> peopleBetween = new ArrayList<>();
+        Iterator<Person> itPerson = this.people.iterator();
+        while(itPerson.hasNext()) {
+            Person person = itPerson.next();
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(person.getBirthdate());
+            int yearBirth = calendar.get(Calendar.YEAR);
+            if(year1<=yearBirth && year2>=yearBirth) {
+                tree.addElement(person);
+            }
+        }
+        Iterator <Person> treeIt= tree.iteratorInOrder();
+        while(treeIt.hasNext()){
+            Person person = treeIt.next();
+            peopleBetween.add(person);
+        }
+
+        return peopleBetween;
     }
 
 }
