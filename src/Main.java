@@ -33,7 +33,9 @@ public class Main {
         System.out.println("7. Find people from two birthdates");		//8th point on project description (2nd milestone)
         System.out.println("8. Find people from others birthplaces");	//9th point on project description (2nd milestone)
         System.out.println("9. Split profiles");						//10th point on project description (2nd milestone)
-        System.out.println("10. Log out");
+        System.out.println("10. Find the shortest path bewtween 2 friends");
+        System.out.println("11. Find the longest path bewtween 2 friends");
+        System.out.println("12. Log out");
     }
 
     /**
@@ -173,11 +175,9 @@ public class Main {
 
         short selectedOption;
         SocialNetwork socialNetwork = new SocialNetwork();
-        DoubleOrderedList<Person> people = null;
-        OrderedList<Relationship> relations = null;
         Scanner sc = new Scanner(System.in);
-        Iterator<Person> itPerson;
-        Person actual;
+        String source;
+        String destination;
         
         do{
             showMenu();
@@ -270,13 +270,39 @@ public class Main {
 
                     break;
                 case 10:
+                    sc.nextLine();
+                    System.out.println("Introduce an ID:");
+                    source = sc.nextLine();
+                    System.out.println("Introduce another ID:");
+                    destination = sc.nextLine();
+                    ArrayList<String> bfs = socialNetwork.BFS(source,destination);
+                    if(bfs.isEmpty()){
+                        System.out.println("Friends no connected");
+                    }else {
+                        for (String s : bfs) {
+                            System.out.println(s);
+                        }
+                    }
+                    break;
+                case 11:
+                    sc.nextLine();
+                    System.out.println("Introduce an ID:");
+                    source = sc.nextLine();
+                    System.out.println("Introduce another ID:");
+                    destination = sc.nextLine();
+                    ArrayList<String> dfs = socialNetwork.DFS(source,destination);
+                    for(String s : dfs){
+                        System.out.println(s);
+                    }
+                    break;
+                case 12:
                     System.out.println("Log out...");
                     break;
                 default:
                     System.out.println("Option not found");
                     break;
             }
-        }while(selectedOption != 10);
+        }while(selectedOption != 12);
         sc.close();
     }
 }

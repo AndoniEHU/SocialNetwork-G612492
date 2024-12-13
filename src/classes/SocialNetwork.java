@@ -3,6 +3,10 @@ package classes;
 import incl.DoubleOrderedList;
 import incl.LinkedBinarySearchTree;
 import incl.OrderedList;
+import incl.SedgewickCommon.Stack;
+import incl.graphsundirected.BreadthFirstPaths;
+import incl.graphsundirected.DepthFirstPaths;
+import incl.graphsundirected.SymbolGraph;
 
 import java.util.*;
 
@@ -10,6 +14,7 @@ public class SocialNetwork {
 
     DoubleOrderedList<Person> people;
     OrderedList<Relationship> relations;
+    SymbolGraph graph;
 
     public SocialNetwork() {
         people = new DoubleOrderedList<>();
@@ -22,6 +27,12 @@ public class SocialNetwork {
 
     public void setPeople(DoubleOrderedList<Person> people) {
         this.people = people;
+        if(graph == null){
+            graph = new SymbolGraph(people);
+        }else{
+            graph = new SymbolGraph(this.people);
+            graph.addEdges(relations);
+        }
     }
 
     public OrderedList<Relationship> getRelations() {
@@ -30,6 +41,8 @@ public class SocialNetwork {
 
     public void setRelations(OrderedList<Relationship> relations) {
         this.relations = relations;
+        graph = new SymbolGraph(this.people);
+        graph.addEdges(this.relations);
     }
 
     public void showPeople(){
@@ -207,6 +220,35 @@ public class SocialNetwork {
         }
 
         return peopleBetween;
+    }
+
+    public ArrayList<String> BFS (String source, String destination){
+        int s = graph.index(source);
+        int d = graph.index(destination);
+        BreadthFirstPaths bfs = new BreadthFirstPaths(graph.G(),s);
+        Stack<Integer> stack = bfs.check(graph.G(),s,d);
+        if(stack == null){
+            return new ArrayList<>();
+        }
+        Iterator<Integer> it = stack.iterator();
+        ArrayList<String> result = new ArrayList<>();
+        while(it.hasNext()){
+            int v = it.next();
+            result.add(graph.name(v));
+        }
+        return result;
+    }
+
+    public ArrayList<String> DFS (String source, String destination) {
+        int s = graph.index(source);
+        int d = graph.index(destination);
+        DepthFirstPaths dfs = new DepthFirstPaths(graph.G(), s);
+        Iterator<Integer> it = dfs.pathTo(d).iterator();
+        ArrayList<String> result = new ArrayList<>();
+        while(it.hasNext()){
+            result.add(graph.name(it.next()));
+        }
+        return result;
     }
 
 }
