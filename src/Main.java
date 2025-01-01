@@ -25,16 +25,16 @@ public class Main {
     public static void showMenu(){
     	System.out.println("Choose one option between the next ones:");
         System.out.println("1. Load people into network");
-        System.out.println("2. Load Reationships");
+        System.out.println("2. Load Relationships");
         System.out.println("3. Print out people");
         System.out.println("4. Search");
         System.out.println("5. Get fiends from surname");   			//6th point on project description (2nd milestone)
-        System.out.println("6. Find people from a bithplace");			//7th point on project description (2nd milestone)
+        System.out.println("6. Find people from a birthplace");			//7th point on project description (2nd milestone)
         System.out.println("7. Find people from two birthdates");		//8th point on project description (2nd milestone)
         System.out.println("8. Find people from others birthplaces");	//9th point on project description (2nd milestone)
         System.out.println("9. Split profiles");						//10th point on project description (2nd milestone)
-        System.out.println("10. Find the shortest path bewtween 2 friends");
-        System.out.println("11. Find the longest path bewtween 2 friends");
+        System.out.println("10. Find the shortest path between 2 friends"); // 11th point on project description (3rd milestone)
+        System.out.println("11. Find an alternate path between 2 friends"); // 12th point on project description (3rd milestone)
         System.out.println("12. Log out");
     }
 
@@ -277,7 +277,7 @@ public class Main {
                     destination = sc.nextLine();
                     ArrayList<String> bfs = socialNetwork.BFS(source,destination);
                     if(bfs.isEmpty()){
-                        System.out.println("Friends no connected");
+                        System.out.println("Friends not connected");
                     }else {
                         for (String s : bfs) {
                             System.out.println(s);
@@ -290,11 +290,16 @@ public class Main {
                     source = sc.nextLine();
                     System.out.println("Introduce another ID:");
                     destination = sc.nextLine();
-                    ArrayList<String> dfs = socialNetwork.DFS(source,destination);
-                    for(String s : dfs){
-                        System.out.println(s);
+                    ArrayList<String> altPath = socialNetwork.altDFS(source,destination);
+                    if(altPath.isEmpty()){
+                        System.out.println("Friends no connected");
+                    }else {
+                        for (String s : altPath) {
+                            System.out.println(s);
+                        }
                     }
                     break;
+
                 case 12:
                     System.out.println("Log out...");
                     break;
