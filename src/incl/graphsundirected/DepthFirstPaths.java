@@ -36,11 +36,20 @@ public class DepthFirstPaths {
     private int[] edgeTo;        // edgeTo[v] = last edge on s-v path
     private final int s;         // source vertex
 
+    // Default constructor: Used to compute DFS to all nodes
     public DepthFirstPaths(Graph G, int s) {
         this.s = s;
         edgeTo = new int[G.V()];
         marked = new boolean[G.V()];
         dfs(G, s);
+    }
+
+    // Alternative constructor: Used to find the alternative path to node t
+    public DepthFirstPaths(Graph G, int s, int t) {
+        this.s = s;
+        edgeTo = new int[G.V()];
+        marked = new boolean[G.V()];
+        altDFS(G, s, t);
     }
 
     // depth first search from v
@@ -53,6 +62,31 @@ public class DepthFirstPaths {
             }
         }
     }
+
+    // alternate depth first search from v: find the SECOND path when looking for node t
+    private void altDFS(Graph G, int v, int t) {
+        marked[v] = true;
+        boolean tFound = false;
+        for (int w : G.adj(v)) {
+            if (!marked[w]) {
+                // We discard the first path we find
+                if (w==t && !tFound) {
+                    tFound = true;
+                }
+                else if (w==t && tFound) { // When we find a second path, we return it
+                    edgeTo[w] = t;
+                    marked[w]=true;
+                    return;
+                }
+                else {
+                    edgeTo[w] = v;
+                    dfs(G, w);
+                    marked[w] = false; // We mark this edge as unvisited so it can be used in another path
+                }
+            }
+        }
+    }
+
 
     // is there a path between s and v?
     public boolean hasPathTo(int v) {
