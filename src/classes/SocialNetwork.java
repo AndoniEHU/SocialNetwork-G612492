@@ -3,6 +3,10 @@ package classes;
 import incl.DoubleOrderedList;
 import incl.LinkedBinarySearchTree;
 import incl.OrderedList;
+import incl.SedgewickCommon.Stack;
+import incl.graphsundirected.BreadthFirstPaths;
+import incl.graphsundirected.DepthFirstPaths;
+import incl.graphsundirected.SymbolGraph;
 
 import java.util.*;
 
@@ -10,6 +14,7 @@ public class SocialNetwork {
 
     DoubleOrderedList<Person> people;
     OrderedList<Relationship> relations;
+    SymbolGraph graph;
 
     public SocialNetwork() {
         people = new DoubleOrderedList<>();
@@ -22,6 +27,12 @@ public class SocialNetwork {
 
     public void setPeople(DoubleOrderedList<Person> people) {
         this.people = people;
+        if(graph == null){
+            graph = new SymbolGraph(people);
+        }else{
+            graph = new SymbolGraph(this.people);
+            graph.addEdges(relations);
+        }
     }
 
     public OrderedList<Relationship> getRelations() {
@@ -30,6 +41,8 @@ public class SocialNetwork {
 
     public void setRelations(OrderedList<Relationship> relations) {
         this.relations = relations;
+        graph = new SymbolGraph(this.people);
+        graph.addEdges(this.relations);
     }
 
     public void showPeople(){
@@ -207,6 +220,86 @@ public class SocialNetwork {
         }
 
         return peopleBetween;
+    }
+
+    public ArrayList<String> BFS (String source, String destination){
+        int s = graph.index(source);
+        int d = graph.index(destination);
+        BreadthFirstPaths bfs = new BreadthFirstPaths(graph.G(),s);
+        Stack<Integer> stack = bfs.check(graph.G(),s,d);
+        if(stack == null){
+            return new ArrayList<>();
+        }
+        Iterator<Integer> it = stack.iterator();
+        ArrayList<String> result = new ArrayList<>();
+        while(it.hasNext()){
+            int v = it.next();
+            result.add(graph.name(v));
+        }
+        return result;
+    }
+
+    // Provides an alternative path to the first one found by BFS, or null if it doesn't exist
+    public ArrayList<String> altDFS (String source, String destination){
+        int s = graph.index(source);
+        int d = graph.index(destination);
+
+        // We compute the route that BFS finds first
+        ArrayList<String> BFSpath = BFS(source, destination);
+
+        // The result will contain the alternate route
+        ArrayList<String> result = new ArrayList<String>();
+
+        // We try the first path found with DFS
+        DepthFirstPaths dfs = new DepthFirstPaths(graph.G(),s);
+        Iterable<Integer> firstPath = dfs.pathTo(d);
+
+        // If the friends aren't connected, return an empty array
+        if (firstPath==null) return result;
+
+        Iterator<Integer> it = firstPath.iterator();
+
+        // We construct the result
+        while (it.hasNext()){
+            int v = it.next();
+            result.add(graph.name(v));
+        }
+
+        // If the path found with DFS is different than the one found with BFS, we return it
+        if (!BFSpath.equals(result)) {
+            return result;
+        }
+        // Otherwise, we look for the SECOND path found by DFS
+        else {
+            result = new ArrayList<String>();
+            dfs = new DepthFirstPaths(graph.G(),s, d);
+            firstPath = dfs.pathTo(d);
+
+            // If there's no alternative path, we return an empty array
+            if (firstPath == null) {
+                return result;
+            }
+
+            it = firstPath.iterator();
+            while (it.hasNext()) {
+                int v = it.next();
+                result.add(graph.name(v));
+            }
+            return result;
+        }
+    }
+
+
+    public ArrayList<String> DFS (String source, String destination) {
+        int s = graph.index(source);
+        int d = graph.index(destination);
+        DepthFirstPaths dfs = new DepthFirstPaths(graph.G(), s);
+        Iterator<Integer> it = dfs.pathTo(d).iterator();
+        ArrayList<String> result = new ArrayList<>();
+        while(it.hasNext()){
+            result.add(graph.name(it.next()));
+        }
+        return result;
     }
 
 }
